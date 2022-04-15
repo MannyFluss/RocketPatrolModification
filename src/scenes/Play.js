@@ -7,11 +7,12 @@ class Play extends Phaser.Scene
     preload()
     {
         //preload sprites for scene
-        this.load.image('rocket', './assets/rocket.png'); // (identifier, sprite path)
-        this.load.spritesheet('explosion','./assets/explosion.png', {frameWidth:64, frameHeight: 32, startFrame : 0});
-        this.load.image('spaceship', './assets/spaceship.png');
-        this.load.image('starfield', './assets/starfield.png');
-
+        this.load.image('rocket', './assets/fishingbob.png'); // (identifier, sprite path)
+        this.load.spritesheet('explosion','./assets/ripFish.png', {frameWidth:64, frameHeight: 32, startFrame : 0});
+        this.load.image('spaceship', './assets/fish.png');
+        this.load.image('starfield', './assets/water.png');
+        //music credit goes to Liam Fahey my dearest and most obnoxious roomate
+        this.load.audio('music', './assets/EpicMusic.mp3');
         //audio
         this.load.audio('sfx_select', './assets/blip_select12.wav');
         this.load.audio('sfx_explosion', './assets/explosion38.wav');
@@ -22,18 +23,15 @@ class Play extends Phaser.Scene
     }
     create()
     {
-
-
-
-
+        this.sound.play('music');
         this.starfield = this.add.tileSprite(0,0,640,480, 'starfield').setOrigin(0,0); //tilesprite has innate scrolling
         // green UI background
-        this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2, 0x00FF00).setOrigin(0, 0);
+        this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2, 0x964B00).setOrigin(0, 0);
         // white borders
-        this.add.rectangle(0, 0, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0, 0);
-        this.add.rectangle(0, game.config.height - borderUISize, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0, 0);
-        this.add.rectangle(0, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0, 0);
-        this.add.rectangle(game.config.width - borderUISize, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0, 0);
+        this.add.rectangle(0, 0, game.config.width, borderUISize, 0x000080).setOrigin(0, 0);
+        this.add.rectangle(0, game.config.height - borderUISize, game.config.width, borderUISize, 0x000080).setOrigin(0, 0);
+        this.add.rectangle(0, 0, borderUISize, game.config.height, 0x000080).setOrigin(0, 0);
+        this.add.rectangle(game.config.width - borderUISize, 0, borderUISize, game.config.height, 0x000080).setOrigin(0, 0);
 
         // add rocket (p1)
 
@@ -93,12 +91,15 @@ class Play extends Phaser.Scene
 
 
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyLEFT)) {
+            
+            this.game.sound.stopAll();//quick and dirty solution but it works
             this.scene.start("menuScene");
         }
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)) {
+            this.game.sound.stopAll();
             this.scene.restart();
         }
-        this.starfield.tilePositionX -= 4;
+        this.starfield.tilePositionX -= 1;
         if (!this.gameOver)
         {
             this.p1Rocket.update();
@@ -149,5 +150,7 @@ class Play extends Phaser.Scene
         this.scoreLeft.text = this.p1Score; 
         this.sound.play('sfx_explosion'); 
       }
+
+
 
 }
