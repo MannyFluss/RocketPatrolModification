@@ -1,8 +1,8 @@
-class Play extends Phaser.Scene 
+class Multiplayer extends Phaser.Scene 
 {
 
     constructor(){
-        super("playScene");//used to identify the scene (called insisde Phaser.scene)
+        super("multiplayerScene");//used to identify the scene (called insisde Phaser.scene)
     }
     preload()
     {
@@ -14,7 +14,7 @@ class Play extends Phaser.Scene
         //music credit goes to Liam Fahey my dearest and most obnoxious roomate
         this.load.audio('music', './assets/EpicMusic.mp3');
         //audio
-        this.load.audio('sfx_select', './assets/blip_select12.wav');
+        this.load.audio('sfx_select', './asets/blip_select12.wav');
         this.load.audio('sfx_explosion', './assets/bubblz.wav');
         this.load.audio('sfx_rocket', './assets/reel.wav');
 
@@ -23,6 +23,7 @@ class Play extends Phaser.Scene
     }
     create()
     {
+        this.p2score = 0;
         this.sound.play('music');
         this.starfield = this.add.tileSprite(0,0,640,480, 'starfield').setOrigin(0,0); //tilesprite has innate scrolling
         // add spaceships (x3)
@@ -46,6 +47,18 @@ class Play extends Phaser.Scene
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+        //setup multiplayer keys
+        this.ship01.multiplayer = true;
+        this.ship02.multiplayer = true; 
+        this.ship03.multiplayer = true; 
+        
+        fish1Key = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.I);
+        this.ship01.keyInput = fish1Key;
+        fish2Key = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.O);
+        this.ship02.keyInput = fish2Key;
+        fish2Key = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
+        this.ship02.keyInput = fish2Key;
+
         //adding prefabs
         this.p1Rocket = new Rocket(this, game.config.width/2, 
             game.config.height - borderUISize - borderPadding, 'rocket').setOrigin(0.5, 0);
@@ -76,6 +89,7 @@ class Play extends Phaser.Scene
             fixedWidth: 100
         }
         this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, this.p1Score, scoreConfig);
+        this.scoreRight = this.add.text(borderUISize + borderPadding + 455, borderUISize + borderPadding*2 , this.p2score, scoreConfig);
 
         // 60-second play clock one shot timer
         this.gameOver = false;//flag to check if game is over
@@ -88,6 +102,8 @@ class Play extends Phaser.Scene
         }, null, this);
 
     }
+
+
     update()
     {
 

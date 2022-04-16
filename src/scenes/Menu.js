@@ -7,12 +7,13 @@ class Menu extends Phaser.Scene
     preload()
     {
         this.load.audio('sfx_select', './assets/blip_select12.wav');
-        this.load.audio('sfx_explosion', './assets/explosion38.wav');
-        this.load.audio('sfx_rocket', './assets/rocket_shot.wav');
+        this.load.audio('sfx_explosion', './assets/bubblz.wav');
+        this.load.audio('sfx_rocket', './assets/reel.wav');
 
     }
     create()
     {
+        
         this.add.text(20,20, "Rocket Patrol Play");
         //this.scene.start("playScene");
         let menuConfig = {
@@ -28,13 +29,13 @@ class Menu extends Phaser.Scene
             fixedWidth: 0
         }
         this.add.text(game.config.width/2, game.config.height/2 - borderUISize
-        - borderPadding, 'ROCKET PATROL', menuConfig).setOrigin(0.5);
+        - borderPadding, 'FISH PATROL', menuConfig).setOrigin(0.5);
         this.add.text(game.config.width/2, game.config.height/2 
-            , 'Use <- -> arrows to move & (F) to fire', menuConfig).setOrigin(0.5);
+            , 'Use A and D to move & (W) to fire', menuConfig).setOrigin(0.5);
         menuConfig.backgroundColor = '#00FF00';
         menuConfig.color = '#000';
         this.add.text(game.config.width/2, game.config.height/2 + borderPadding + borderUISize,
-        'Press <- for Novice or -> for Expert', menuConfig).setOrigin(0.5);
+        'for Normal <-  -> for Multiplayer', menuConfig).setOrigin(0.5);
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
 
@@ -53,11 +54,11 @@ class Menu extends Phaser.Scene
         if (Phaser.Input.Keyboard.JustDown(keyRIGHT)) {
           // hard mode
           game.settings = {
-            spaceshipSpeed: 4,
+            spaceshipSpeed: 3,
             gameTimer: 45000    
           }
           this.sound.play('sfx_select');
-          this.scene.start('playScene');    
+          this.scene.start('multiplayerScene');    
         }
       }
 }
