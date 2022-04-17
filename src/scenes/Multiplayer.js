@@ -124,18 +124,21 @@ class Multiplayer extends Phaser.Scene
         }
         if (this.ship01.x <= 0 - this.ship01.width) //this.x = game.config.width;
         {
+            this.ship01.active = false;
             this.ship01.x = 600000;
             this.p2score += 10;
             this.scoreRight.text = this.p2score;
         }
         if (this.ship02.x <= 0 - this.ship02.width) //this.x = game.config.width;
         {
+            this.ship02.active = false;
             this.ship02.x = 600000;
             this.p2score += 10;
             this.scoreRight.text = this.p2score;
         }
         if (this.ship03.x <= 0 - this.ship03.width) //this.x = game.config.width;
         {
+            this.ship03.active = false;
             this.ship03.x = 600000;
             this.p2score += 10;
             this.scoreRight.text = this.p2score;
@@ -178,6 +181,7 @@ class Multiplayer extends Phaser.Scene
         boom.anims.play('explode');             // play explode animation
         boom.on('animationcomplete', () => {    // callback after anim completes
           ship.x = 60000;                         // reset ship position
+          ship.active = false;
           ship.alpha = 1;                       // make ship visible again
           boom.destroy();                       // remove explosion sprite
         });     

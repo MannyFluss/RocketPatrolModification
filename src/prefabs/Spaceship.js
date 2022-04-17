@@ -28,10 +28,7 @@ class Spaceship extends Phaser.GameObjects.Sprite
     }
     reset()
     {
-        if (this.multiplayer == false)
-        {
-            this.x = game.config.width;
-        }
+        this.x = game.config.width;
         this.active = true;
     }
 
