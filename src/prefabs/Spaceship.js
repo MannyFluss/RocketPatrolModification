@@ -1,5 +1,3 @@
-
-
 class Spaceship extends Phaser.GameObjects.Sprite 
 {
     constructor(scene,x,y,texture,frame,pointValue)
@@ -30,7 +28,10 @@ class Spaceship extends Phaser.GameObjects.Sprite
     }
     reset()
     {
-        this.x = game.config.width;
+        if (this.multiplayer == false)
+        {
+            this.x = game.config.width;
+        }
         this.active = true;
     }
 

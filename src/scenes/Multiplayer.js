@@ -39,10 +39,7 @@ class Multiplayer extends Phaser.Scene
         this.add.rectangle(0, 0, borderUISize, game.config.height, 0x000080).setOrigin(0, 0);
         this.add.rectangle(game.config.width - borderUISize, 0, borderUISize, game.config.height, 0x000080).setOrigin(0, 0);
 
-        // add rocket (p1)
-
-        
-        
+        // add rocket (p1) 
         keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -56,8 +53,8 @@ class Multiplayer extends Phaser.Scene
         this.ship01.keyInput = fish1Key;
         fish2Key = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.O);
         this.ship02.keyInput = fish2Key;
-        fish2Key = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
-        this.ship02.keyInput = fish2Key;
+        fish3Key = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
+        this.ship03.keyInput = fish3Key;
 
         //adding prefabs
         this.p1Rocket = new Rocket(this, game.config.width/2, 
@@ -125,7 +122,24 @@ class Multiplayer extends Phaser.Scene
             this.ship02.update();
             this.ship03.update();
         }
-
+        if (this.ship01.x <= 0 - this.ship01.width) //this.x = game.config.width;
+        {
+            this.ship01.x = 600000;
+            this.p2score += 10;
+            this.scoreRight.text = this.p2score;
+        }
+        if (this.ship02.x <= 0 - this.ship02.width) //this.x = game.config.width;
+        {
+            this.ship02.x = 600000;
+            this.p2score += 10;
+            this.scoreRight.text = this.p2score;
+        }
+        if (this.ship03.x <= 0 - this.ship03.width) //this.x = game.config.width;
+        {
+            this.ship03.x = 600000;
+            this.p2score += 10;
+            this.scoreRight.text = this.p2score;
+        }
         // check collisions
         if(this.checkCollision(this.p1Rocket, this.ship03)) {
             this.p1Rocket.reset();
@@ -139,6 +153,10 @@ class Multiplayer extends Phaser.Scene
             this.p1Rocket.reset();
             this.shipExplode(this.ship01);
         }
+        //check if a fish has made it to the other side to score
+
+
+
     }
 
     checkCollision(rocket, ship) {
@@ -159,7 +177,7 @@ class Multiplayer extends Phaser.Scene
         let boom = this.add.sprite(ship.x, ship.y, 'explosion').setOrigin(0, 0);
         boom.anims.play('explode');             // play explode animation
         boom.on('animationcomplete', () => {    // callback after anim completes
-          ship.reset();                         // reset ship position
+          ship.x = 60000;                         // reset ship position
           ship.alpha = 1;                       // make ship visible again
           boom.destroy();                       // remove explosion sprite
         });     
